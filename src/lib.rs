@@ -4,7 +4,7 @@ pub struct Connect4 {
     board: Vec<Vec<Option<Player>>>,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub enum Player {
     Red,
     Yellow,
@@ -18,7 +18,15 @@ impl Connect4 {
     }
 
     pub fn play(&mut self, player: Player, column: usize) {
-        self.board[column - 1][0] = Some(player);
+        for row in 0..self.board[column - 1].len() {
+            match self.board[column - 1][row] {
+                Some(_) => continue,
+                None => {
+                    self.board[column - 1][row] = Some(player);
+                    break;
+                }
+            }
+        }
     }
 
     pub fn to_string(&self) -> String {
