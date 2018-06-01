@@ -2,6 +2,7 @@ extern crate connect_4;
 
 use connect_4::Connect4;
 use connect_4::Player;
+use connect_4::State;
 
 #[test]
 fn it_starts_blank() {
@@ -66,4 +67,10 @@ fn cannot_play_out_the_top() {
     game.play(Player::Yellow, 4).unwrap();
     game.play(Player::Red, 4).unwrap();
     assert_eq!(game.play(Player::Yellow, 4), Err("No more space in that column."));
+}
+
+#[test]
+fn game_starts_in_play() {
+    let game = Connect4::new();
+    assert_eq!(game.state(), State::InPlay)
 }

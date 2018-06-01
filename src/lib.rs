@@ -11,6 +11,11 @@ pub enum Player {
     Yellow,
 }
 
+#[derive(PartialEq, Debug)]
+pub enum State {
+    InPlay,
+}
+
 impl Connect4 {
     pub fn new() -> Connect4 {
         Connect4 {
@@ -36,6 +41,10 @@ impl Connect4 {
         }
 
         Err("No more space in that column.")
+    }
+
+    pub fn state(&self) -> State {
+        State::InPlay
     }
 
     pub fn to_string(&self) -> String {
