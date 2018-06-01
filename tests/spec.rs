@@ -55,3 +55,15 @@ fn cannot_play_as_the_same_player_twice_in_a_row() {
     game.play(Player::Yellow, 4).unwrap();
     assert_eq!(game.play(Player::Yellow, 4), Err("You can't have two goes."));
 }
+
+#[test]
+fn cannot_play_out_the_top() {
+    let mut game = Connect4::new();
+    game.play(Player::Yellow, 4).unwrap();
+    game.play(Player::Red, 4).unwrap();
+    game.play(Player::Yellow, 4).unwrap();
+    game.play(Player::Red, 4).unwrap();
+    game.play(Player::Yellow, 4).unwrap();
+    game.play(Player::Red, 4).unwrap();
+    assert_eq!(game.play(Player::Yellow, 4), Err("No more space in that column."));
+}

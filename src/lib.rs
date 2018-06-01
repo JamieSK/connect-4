@@ -30,12 +30,12 @@ impl Connect4 {
                 Some(_) => continue,
                 None => {
                     self.board[column - 1][row] = Some(player);
-                    break;
+                    return Ok("Played a turn.");
                 }
             }
         }
 
-        Ok("Played a turn.")
+        Err("No more space in that column.")
     }
 
     pub fn to_string(&self) -> String {
