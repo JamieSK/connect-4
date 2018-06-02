@@ -14,6 +14,7 @@ pub enum Player {
 #[derive(PartialEq, Debug)]
 pub enum State {
     InPlay,
+    Stalemate,
 }
 
 impl Connect4 {
@@ -44,7 +45,12 @@ impl Connect4 {
     }
 
     pub fn state(&self) -> State {
-        State::InPlay
+        for column in &self.board {
+            if column.contains(&None) {
+                return State::InPlay;
+            }
+        }
+        return State::Stalemate;
     }
 
     pub fn to_string(&self) -> String {
