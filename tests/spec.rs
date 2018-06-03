@@ -88,6 +88,15 @@ fn can_win_horizontally() {
                game.to_string(), game.winner);
 }
 
+#[test]
+fn can_win_vertically() {
+    let mut game = Connect4::new();
+    play_in_columns(&mut game, vec!(1, 2, 1, 2, 1, 2, 1));
+    assert_eq!(game.state(), State::Won,
+               "\nExpected Won; game board was: {}and game winner was: {:?}\n",
+               game.to_string(), game.winner)
+}
+
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {
     let mut player = Player::Yellow;
     for column in columns {

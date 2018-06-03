@@ -59,6 +59,12 @@ impl Connect4 {
                 && board[x + i][y] == board[x + i - 3][y] {
                 return true;
             }
+            if y + i >= 3 && y + i <= 5
+                && board[x][y + i] == board[x][y + i - 1]
+                && board[x][y + i] == board[x][y + i - 2]
+                && board[x][y + i] == board[x][y + i - 3] {
+                return true;
+            }
         }
         false
     }
