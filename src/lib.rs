@@ -31,6 +31,8 @@ impl Connect4 {
     pub fn play(&mut self, player: Player, column: usize) -> Result<&str, &str> {
         if self.last_player == Some(player) {
             return Err("You can't have two goes.");
+        } else if column == 0 || column > 7 {
+            return Err("That's not in the board.");
         }
         self.last_player = Some(player);
 

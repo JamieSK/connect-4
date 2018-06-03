@@ -106,6 +106,12 @@ fn can_win_diagonally() {
                game.to_string(), game.winner);
 }
 
+#[test]
+fn cannot_play_out_of_the_board() {
+    let mut game = Connect4::new();
+    assert_eq!(game.play(Player::Red, 9), Err("That's not in the board."));
+}
+
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {
     let mut player = Player::Yellow;
     for column in columns {
