@@ -61,21 +61,31 @@ fn cannot_play_out_the_top() {
 #[test]
 fn game_starts_in_play() {
     let game = Connect4::new();
-    assert_eq!(game.state(), State::InPlay)
+    assert_eq!(game.state(), State::InPlay);
 }
 
 #[test]
 fn full_board_is_stalemate() {
     let mut game = Connect4::new();
     play_in_columns(&mut game, vec!(
-                         1, 1, 1, 1, 1, 1,
-                         2, 2, 2, 2, 2, 2,
-                         3, 3, 3, 3, 3, 3,
-                         4, 4, 4, 4, 4, 4,
-                         5, 5, 5, 5, 5, 5,
-                         6, 6, 6, 6, 6, 6,
-                         7, 7, 7, 7, 7, 7));
-    assert_eq!(game.state(), State::Stalemate)
+                         1, 2, 3, 4, 5, 6, 7,
+                         1, 2, 3, 4, 5, 6, 7,
+                         1, 2, 3, 4, 5, 6, 7,
+                         1, 2, 3, 4, 5, 6, 7,
+                         1, 2, 3, 4, 5, 6, 7,
+                         1, 2, 3, 4, 5, 6, 7));
+    assert_eq!(game.state(), State::Stalemate,
+               "\nExpected Stalemate; game board was: {}and game winner was: {:?}\n",
+               game.to_string(), game.winner);
+}
+
+#[test]
+fn can_win_horizontally() {
+    let mut game = Connect4::new();
+    play_in_columns(&mut game, vec!(1, 1, 2, 2, 3, 3, 4));
+    assert_eq!(game.state(), State::Won,
+               "\nExpected Won; game board was: {}and game winner was: {:?}\n",
+               game.to_string(), game.winner);
 }
 
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {

@@ -3,9 +3,10 @@ use std::fmt;
 pub struct Connect4 {
     board: Vec<Vec<Option<Player>>>,
     last_player: Option<Player>,
+    pub winner: Option<Player>,
 }
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Player {
     Red,
     Yellow,
@@ -15,6 +16,7 @@ pub enum Player {
 pub enum State {
     InPlay,
     Stalemate,
+    Won,
 }
 
 impl Connect4 {
@@ -22,6 +24,7 @@ impl Connect4 {
         Connect4 {
             board: vec![vec![None; 6]; 7],
             last_player: None,
+            winner: None,
         }
     }
 
@@ -36,6 +39,9 @@ impl Connect4 {
                 Some(_) => continue,
                 None => {
                     self.board[column - 1][row] = Some(player);
+                    if self.is_winning_move(column - 1, row) {
+                        self.winner = Some(player);
+                    }
                     return Ok("Played a turn.");
                 }
             }
@@ -44,7 +50,23 @@ impl Connect4 {
         Err("No more space in that column.")
     }
 
+    fn is_winning_move(&self, x: usize, y: usize) -> bool {
+        let board = &self.board;
+        for i in 0..3 {
+            if x + i >= 3 && x + i <= 6
+                && board[x + i][y] == board[x + i - 1][y]
+                && board[x + i][y] == board[x + i - 2][y]
+                && board[x + i][y] == board[x + i - 3][y] {
+                return true;
+            }
+        }
+        false
+    }
+
     pub fn state(&self) -> State {
+        if self.winner != None {
+            return State::Won;
+        }
         for column in &self.board {
             if column.contains(&None) {
                 return State::InPlay;
