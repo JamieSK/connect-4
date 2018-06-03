@@ -69,10 +69,10 @@ fn full_board_is_stalemate() {
     let mut game = Connect4::new();
     play_in_columns(&mut game, vec!(
                          1, 2, 3, 4, 5, 6, 7,
+                         2, 3, 4, 5, 6, 7, 1,
                          1, 2, 3, 4, 5, 6, 7,
                          1, 2, 3, 4, 5, 6, 7,
-                         1, 2, 3, 4, 5, 6, 7,
-                         1, 2, 3, 4, 5, 6, 7,
+                         2, 3, 4, 5, 6, 7, 1,
                          1, 2, 3, 4, 5, 6, 7));
     assert_eq!(game.state(), State::Stalemate,
                "\nExpected Stalemate; game board was: {}and game winner was: {:?}\n",
@@ -94,7 +94,16 @@ fn can_win_vertically() {
     play_in_columns(&mut game, vec!(1, 2, 1, 2, 1, 2, 1));
     assert_eq!(game.state(), State::Won,
                "\nExpected Won; game board was: {}and game winner was: {:?}\n",
-               game.to_string(), game.winner)
+               game.to_string(), game.winner);
+}
+
+#[test]
+fn can_win_diagonally() {
+    let mut game = Connect4::new();
+    play_in_columns(&mut game, vec!(1, 2, 2, 3, 4, 3, 3, 4, 4, 5, 4));
+    assert_eq!(game.state(), State::Won,
+               "\nExpected Won; game board was: {}and game winner was: {:?}\n",
+               game.to_string(), game.winner);
 }
 
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {
