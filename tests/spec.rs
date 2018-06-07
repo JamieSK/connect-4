@@ -112,6 +112,14 @@ fn cannot_play_out_of_the_board() {
     assert_eq!(game.play(Player::Red, 9), Err("That's not in the board."));
 }
 
+#[test]
+fn can_try_again_after_playing_out_of_top() {
+    let mut game = Connect4::new();
+    play_in_columns(&mut game, vec!(1, 1, 1, 1, 1, 1));
+    assert_eq!(game.play(Player::Yellow, 1), Err("No more space in that column."));
+    assert_eq!(game.play(Player::Yellow, 2), Ok("Played a turn."));
+}
+
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {
     let mut player = Player::Yellow;
     for column in columns {

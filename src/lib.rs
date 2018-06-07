@@ -34,7 +34,6 @@ impl Connect4 {
         } else if column == 0 || column > 7 {
             return Err("That's not in the board.");
         }
-        self.last_player = Some(player);
 
         for row in 0..self.board[column - 1].len() {
             match self.board[column - 1][row] {
@@ -44,6 +43,7 @@ impl Connect4 {
                     if self.is_winning_move(column - 1, row) {
                         self.winner = Some(player);
                     }
+                    self.last_player = Some(player);
                     return Ok("Played a turn.");
                 }
             }
