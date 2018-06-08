@@ -123,7 +123,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -144,6 +144,14 @@
     <configuration name="Run connect_4" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="channel" value="DEFAULT" />
       <option name="command" value="run --package connect_4 --bin connect_4" />
+      <option name="nocapture" value="true" />
+      <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+    </configuration>
+    <configuration name="Test a_winning_line_is_asterisks" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="channel" value="DEFAULT" />
+      <option name="command" value="test --package connect_4 --test spec a_winning_line_is_asterisks -- --exact" />
       <option name="nocapture" value="true" />
       <option name="backtrace" value="SHORT" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -216,10 +224,12 @@
       <item itemvalue="Cargo Command.Run connect_4" />
       <item itemvalue="Cargo Command.Test can_win_horizontally" />
       <item itemvalue="Cargo Command.Test full_board_is_stalemate" />
+      <item itemvalue="Cargo Command.Test a_winning_line_is_asterisks" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo Command.Run connect_4" />
+        <item itemvalue="Cargo Command.Test a_winning_line_is_asterisks" />
         <item itemvalue="Cargo Command.Test full_board_is_stalemate" />
         <item itemvalue="Cargo Command.Test can_win_horizontally" />
       </list>

@@ -62,6 +62,8 @@ impl Connect4 {
 
     fn check_win(&mut self, x: usize, y: usize) -> bool {
         let board = &self.board;
+        let mut won = false;
+
         for i in 0..=3 {
             if x + i >= 3 && x + i <= 6
                 && board[x + i][y] == board[x + i - 1][y]
@@ -75,7 +77,7 @@ impl Connect4 {
                         Point {x: x + i - 3, y},
                     ]
                 );
-                return true;
+                won = true;
             }
             if y + i >= 3 && y + i <= 5
                 && board[x][y + i] == board[x][y + i - 1]
@@ -89,7 +91,7 @@ impl Connect4 {
                         Point {x, y: y + i - 3},
                     ]
                 );
-                return true;
+                won = true;
             }
             if y + i >= 3 && y + i <= 5 && x + i >= 3 && x + i <= 6
                 && board[x + i][y + i] == board[x + i - 1][y + i - 1]
@@ -103,10 +105,11 @@ impl Connect4 {
                         Point {x: x + i - 3, y: y + i - 3},
                     ]
                 );
-                return true;
+                won = true;
             }
         }
-        false
+
+        return won;
     }
 
     pub fn state(&self) -> State {

@@ -135,6 +135,14 @@ fn winning_with_the_last_move_on_the_left_of_the_line_wins() {
     assert_eq!(State::Won, game.state());
 }
 
+#[test]
+fn a_winning_line_of_more_than_4_counters_are_all_asterisks() {
+    let mut game = Connect4::new();
+    play_in_columns(&mut game, vec!(1, 1, 2, 2, 3, 3, 5, 5, 6, 6, 7, 7, 4));
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m| |\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m\n\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m\n",
+               game.to_string());
+}
+
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {
     let mut player = Player::Yellow;
     for column in columns {
