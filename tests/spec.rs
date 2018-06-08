@@ -7,7 +7,7 @@ use connect_4::State;
 #[test]
 fn it_starts_blank() {
     let game = Connect4::new();
-    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n",
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n1|2|3|4|5|6|7\n",
                game.to_string());
 }
 
@@ -15,7 +15,7 @@ fn it_starts_blank() {
 fn can_play_first_go_as_red() {
     let mut game = Connect4::new();
     game.play(Player::Red, 4).unwrap();
-    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | |\x1b[31mO\x1b[0m| | | \n",
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | |\x1b[31mO\x1b[0m| | | \n1|2|3|4|5|6|7\n",
                game.to_string());
 }
 
@@ -23,7 +23,7 @@ fn can_play_first_go_as_red() {
 fn can_play_first_go_as_yellow() {
     let mut game = Connect4::new();
     game.play(Player::Yellow, 4).unwrap();
-    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | |\x1b[33mO\x1b[0m| | | \n",
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | |\x1b[33mO\x1b[0m| | | \n1|2|3|4|5|6|7\n",
                game.to_string());
 }
 
@@ -31,7 +31,7 @@ fn can_play_first_go_as_yellow() {
 fn can_play_in_any_column() {
     let mut game = Connect4::new();
     play_in_columns(&mut game, vec!(1, 2, 3, 4, 5, 6, 7));
-    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\x1b[33mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[33mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[33mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[33mO\x1b[0m\n",
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\x1b[33mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[33mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[33mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[33mO\x1b[0m\n1|2|3|4|5|6|7\n",
                game.to_string());
 }
 
@@ -40,7 +40,7 @@ fn can_play_on_top_of_another_counter() {
     let mut game = Connect4::new();
     game.play(Player::Yellow, 4).unwrap();
     game.play(Player::Red, 4).unwrap();
-    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | |\x1b[31mO\x1b[0m| | | \n | | |\x1b[33mO\x1b[0m| | | \n",
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n | | |\x1b[31mO\x1b[0m| | | \n | | |\x1b[33mO\x1b[0m| | | \n1|2|3|4|5|6|7\n",
                game.to_string());
 }
 
@@ -124,7 +124,7 @@ fn can_try_again_after_playing_out_of_top() {
 fn a_winning_line_is_asterisks() {
     let mut game = Connect4::new();
     play_in_columns(&mut game, vec!(1, 1, 2, 2, 3, 3, 4));
-    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\x1b[31mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[31mO\x1b[0m| | | | \n\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m| | | \n",
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\x1b[31mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[31mO\x1b[0m| | | | \n\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m| | | \n1|2|3|4|5|6|7\n",
                game.to_string());
 }
 
@@ -139,7 +139,7 @@ fn winning_with_the_last_move_on_the_left_of_the_line_wins() {
 fn a_winning_line_of_more_than_4_counters_are_all_asterisks() {
     let mut game = Connect4::new();
     play_in_columns(&mut game, vec!(1, 1, 2, 2, 3, 3, 5, 5, 6, 6, 7, 7, 4));
-    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m| |\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m\n\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m\n",
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m| |\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m|\u{1b}[31mO\u{1b}[0m\n\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m|\u{1b}[33m*\u{1b}[0m\n1|2|3|4|5|6|7\n",
                game.to_string());
 }
 

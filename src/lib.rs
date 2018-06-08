@@ -131,7 +131,8 @@ impl Connect4 {
 {}|{}|{}|{}|{}|{}|{}\n\
 {}|{}|{}|{}|{}|{}|{}\n\
 {}|{}|{}|{}|{}|{}|{}\n\
-{}|{}|{}|{}|{}|{}|{}\n",
+{}|{}|{}|{}|{}|{}|{}\n\
+1|2|3|4|5|6|7\n",
 self.cell(1, 6), self.cell(2, 6), self.cell(3, 6), self.cell(4, 6), self.cell(5, 6), self.cell(6, 6), self.cell(7, 6),
 self.cell(1, 5), self.cell(2, 5), self.cell(3, 5), self.cell(4, 5), self.cell(5, 5), self.cell(6, 5), self.cell(7, 5),
 self.cell(1, 4), self.cell(2, 4), self.cell(3, 4), self.cell(4, 4), self.cell(5, 4), self.cell(6, 4), self.cell(7, 4),
