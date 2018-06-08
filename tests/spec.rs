@@ -128,6 +128,13 @@ fn a_winning_line_is_asterisks() {
                game.to_string());
 }
 
+#[test]
+fn winning_with_the_last_move_on_the_left_of_the_line_wins() {
+    let mut game = Connect4::new();
+    play_in_columns(&mut game, vec!(7, 7, 6, 6, 5, 5, 4));
+    assert_eq!(State::Won, game.state());
+}
+
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {
     let mut player = Player::Yellow;
     for column in columns {

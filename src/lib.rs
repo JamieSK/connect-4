@@ -62,7 +62,7 @@ impl Connect4 {
 
     fn check_win(&mut self, x: usize, y: usize) -> bool {
         let board = &self.board;
-        for i in 0..3 {
+        for i in 0..=3 {
             if x + i >= 3 && x + i <= 6
                 && board[x + i][y] == board[x + i - 1][y]
                 && board[x + i][y] == board[x + i - 2][y]
