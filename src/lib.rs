@@ -3,7 +3,14 @@ use std::fmt;
 pub struct Connect4 {
     board: Vec<Vec<Option<Player>>>,
     last_player: Option<Player>,
+    winning_cells: Vec<Point>,
     pub winner: Option<Player>,
+}
+
+#[derive(PartialEq, Debug)]
+pub struct Point {
+    x: usize,
+    y: usize,
 }
 
 #[derive(Clone, Copy, PartialEq, Debug)]
@@ -24,6 +31,7 @@ impl Connect4 {
         Connect4 {
             board: vec![vec![None; 6]; 7],
             last_player: None,
+            winning_cells: vec![],
             winner: None,
         }
     }
@@ -40,7 +48,7 @@ impl Connect4 {
                 Some(_) => continue,
                 None => {
                     self.board[column - 1][row] = Some(player);
-                    if self.is_winning_move(column - 1, row) {
+                    if self.check_win(column - 1, row) {
                         self.winner = Some(player);
                     }
                     self.last_player = Some(player);
@@ -52,25 +60,49 @@ impl Connect4 {
         Err("No more space in that column.")
     }
 
-    fn is_winning_move(&self, x: usize, y: usize) -> bool {
+    fn check_win(&mut self, x: usize, y: usize) -> bool {
         let board = &self.board;
         for i in 0..3 {
             if x + i >= 3 && x + i <= 6
                 && board[x + i][y] == board[x + i - 1][y]
                 && board[x + i][y] == board[x + i - 2][y]
                 && board[x + i][y] == board[x + i - 3][y] {
+                self.winning_cells.append(
+                    &mut vec![
+                        Point {x: x + i, y},
+                        Point {x: x + i - 1, y},
+                        Point {x: x + i - 2, y},
+                        Point {x: x + i - 3, y},
+                    ]
+                );
                 return true;
             }
             if y + i >= 3 && y + i <= 5
                 && board[x][y + i] == board[x][y + i - 1]
                 && board[x][y + i] == board[x][y + i - 2]
                 && board[x][y + i] == board[x][y + i - 3] {
+                self.winning_cells.append(
+                    &mut vec![
+                        Point {x, y: y + i},
+                        Point {x, y: y + i - 1},
+                        Point {x, y: y + i - 2},
+                        Point {x, y: y + i - 3},
+                    ]
+                );
                 return true;
             }
             if y + i >= 3 && y + i <= 5 && x + i >= 3 && x + i <= 6
                 && board[x + i][y + i] == board[x + i - 1][y + i - 1]
                 && board[x + i][y + i] == board[x + i - 2][y + i - 2]
                 && board[x + i][y + i] == board[x + i - 3][y + i - 3] {
+                self.winning_cells.append(
+                    &mut vec![
+                        Point {x: x + i, y: y + i},
+                        Point {x: x + i - 1, y: y + i - 1},
+                        Point {x: x + i - 2, y: y + i - 2},
+                        Point {x: x + i - 3, y: y + i - 3},
+                    ]
+                );
                 return true;
             }
         }
@@ -107,9 +139,16 @@ self.cell(1, 1), self.cell(2, 1), self.cell(3, 1), self.cell(4, 1), self.cell(5,
 
     fn cell(&self, x: usize, y: usize) -> String {
         let contents = &self.board[x - 1][y - 1];
-        match contents {
-            None => String::from(" "),
-            Some(player) => format!("{}", player),
+        if self.winning_cells.contains(&Point {x: x - 1, y: y - 1}) {
+            match contents {
+                None => String::from(" "),
+                Some(player) => format!("{}", player.fmt_win()),
+            }
+        } else {
+            match contents {
+                None => String::from(" "),
+                Some(player) => format!("{}", player),
+            }
         }
     }
 }
@@ -120,5 +159,14 @@ impl fmt::Display for Player {
             Player::Red => "\x1b[31mO\x1b[0m",
             Player::Yellow => "\x1b[33mO\x1b[0m",
         })
+    }
+}
+
+impl Player {
+    fn fmt_win(&self) -> String {
+        match *self {
+            Player::Red => String::from("\x1b[31m*\x1b[0m"),
+            Player::Yellow => String::from("\x1b[33m*\x1b[0m"),
+        }
     }
 }

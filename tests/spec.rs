@@ -120,6 +120,14 @@ fn can_try_again_after_playing_out_of_top() {
     assert_eq!(game.play(Player::Yellow, 2), Ok("Played a turn."));
 }
 
+#[test]
+fn a_winning_line_is_asterisks() {
+    let mut game = Connect4::new();
+    play_in_columns(&mut game, vec!(1, 1, 2, 2, 3, 3, 4));
+    assert_eq!("\n | | | | | | \n | | | | | | \n | | | | | | \n | | | | | | \n\x1b[31mO\x1b[0m|\x1b[31mO\x1b[0m|\x1b[31mO\x1b[0m| | | | \n\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m|\x1b[33m*\x1b[0m| | | \n",
+               game.to_string());
+}
+
 fn play_in_columns(game: &mut Connect4, columns: Vec<usize>) {
     let mut player = Player::Yellow;
     for column in columns {
