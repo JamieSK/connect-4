@@ -31,7 +31,7 @@ fn main() {
 }
 
 fn take_input(player: Player) -> usize {
-    println!("Where would you like to play, {}?", player);
+    println!("Where would you like to play, {}?", player.pretty_print());
     let mut input = String::new();
     io::stdin().read_line(&mut input)
         .expect("Failure to read line.");

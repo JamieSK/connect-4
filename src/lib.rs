@@ -173,4 +173,11 @@ impl Player {
             Player::Yellow => String::from("\x1b[33m*\x1b[0m"),
         }
     }
+
+    pub fn pretty_print(&self) -> String {
+        match *self {
+            Player::Red => String::from("\x1b[31mRed\x1b[0m"),
+            Player::Yellow => String::from("\x1b[33mYellow\x1b[0m"),
+        }
+    }
 }
